@@ -3,7 +3,7 @@ import sys, os, uuid
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from helper import extract_data_analysis, get_pdf_paths, read_pdf
-from src.tools.database import AnalyseDatabase
+from src.services.database import AnalyseDatabase
 from src.llm.ai import GroqClient
 from src.models.resum import Resum
 from src.models.file import File
@@ -23,7 +23,7 @@ for path in cv_paths:
     score = ai.generate_score(content, job)
 
     resum_schema = Resum(
-        id=str(uuid.uuid4),
+        id=str(uuid.uuid4()),
         job_id=job.get('id'),
         content=resum,
         file=str(path),
@@ -31,7 +31,7 @@ for path in cv_paths:
     )
 
     file_schema = File(
-        id=str(uuid.uuid4),
+        id=str(uuid.uuid4()),
         job_id=job.get('id'),
     )
 

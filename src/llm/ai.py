@@ -7,12 +7,12 @@ load_dotenv()
 
 class GroqClient:
     
-    def __init__(self, model_id='llama3.2'): # For local use llama 3.2 for Groq API use llama-3.3-70b-versatile
+    def __init__(self, model_id='llama-3.3-70b-versatile'): # For local use llama 3.2 for Groq API use llama-3.3-70b-versatile
         self.model_id = model_id
         # Escolha uma das opções abaixo:
-        self.client = ChatOllama(model=self.model_id, base_url='http://localhost:11434')
+        # self.client = ChatOllama(model=self.model_id, base_url='http://localhost:11434')
         # Ou para usar Groq:
-        # self.client = ChatGroq(model_name=self.model_id)
+        self.client = ChatGroq(model_name=self.model_id)
 
     def generate_Response(self, prompt):
         response = self.client.invoke(prompt)
@@ -22,7 +22,7 @@ class GroqClient:
         prompt = f"""
         Solicitação de Resumo de Currículo em markdown
 
-        Currículo do candidato para seumir:
+        Currículo do candidato para resumir:
         {cv}
 
         Por favor, gere um resumo do currículo fornecido, formatado em markdown, seguindo rigorosamente o modelo abaixo.
@@ -66,7 +66,7 @@ class GroqClient:
         1. Experiência (Peso: 30%)**: Avalie a relevância da experiência em relação à vaga.
         2. Habilidade Técnica (Peso: 25%): ** Verifique o alinhamento das habilidades técnicas com os requisitos da vaga.
         3. Educação (Peso: 10%)**: Avalie a relevância da formação acadêmica para à vaga.
-        4. Idiomas: (Peso: 105)**: Avalie os idiomas e proêfiencia em ralção a vaga lembrando que se tiver Inglês é um baita diferencial.
+        4. Idiomas: (Peso: 10%)**: Avalie os idiomas e proêfiencia em ralção a vaga lembrando que se tiver Inglês é um baita diferencial.
         5. Pontos Fortes: (Peso: 15%)**: Avalie a relevância dos pontos fortes em realção a vaga.
         6. Pontos Fracos: (Desonto de até 10%)**: Avalie a gravidade dos pontos fracos em relação à vaga.
 

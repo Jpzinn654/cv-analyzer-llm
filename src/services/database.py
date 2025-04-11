@@ -25,7 +25,7 @@ class AnalyseDatabase(TinyDB):
     
     def get_resums_by_job_id(self, job_id):
         resum = Query()
-        result = self.analysis.search(resum.job_id == job_id)
+        result = self.resums.search(resum.job_id == job_id)
         return result
     
     def delete_all_resums_by_job_id(self, job_id):
