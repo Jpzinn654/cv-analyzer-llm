@@ -13,8 +13,8 @@ class AnalyseDatabase(TinyDB):
         result =  self.jobs.search(job.name == name)
         return result[0] if result else None
     
-    def get_result_by_id(self, id):
-        resum = Query
+    def get_resum_by_id(self, id):
+        resum = Query()
         result = self.resums.search(resum.id == id)
         return result[0] if result else None
     
@@ -32,7 +32,7 @@ class AnalyseDatabase(TinyDB):
         resum = Query()
         self.resums.remove(resum.job_id == job_id)
 
-    def delete_all_analisys_by_job_id(self, job_id):
+    def delete_all_analysis_by_job_id(self, job_id):
         analisis = Query()
         self.resums.remove(analisis.job_id == job_id)
 

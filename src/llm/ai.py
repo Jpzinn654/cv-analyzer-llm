@@ -1,4 +1,5 @@
 from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 from dotenv import load_dotenv
 import re
 
@@ -6,9 +7,12 @@ load_dotenv()
 
 class GroqClient:
     
-    def __init__(self, model_id='llama-3.3-70b-versatile'):
+    def __init__(self, model_id='llama3.2'): # For local use llama 3.2 for Groq API use llama-3.3-70b-versatile
         self.model_id = model_id
-        self.client = ChatGroq(model=self.model_id)
+        # Escolha uma das opções abaixo:
+        self.client = ChatOllama(model=self.model_id, base_url='http://localhost:11434')
+        # Ou para usar Groq:
+        # self.client = ChatGroq(model_name=self.model_id)
 
     def generate_Response(self, prompt):
         response = self.client.invoke(prompt)
@@ -90,7 +94,7 @@ class GroqClient:
                 return score # Caso não encontre o score ele volta o loop até gerar o score
     
     def extract_score_from_result(self, result_raw):
-        pattern = r"(?1)Pontuação Final:\s*([0-9]+(?:\.[0-9])?)"
+        pattern = r"(?i)Pontuação Final[:\s]*([\d,.]+(?:/\d{1,2})?)"
 
         match = re.search(pattern, result_raw)
         if match:

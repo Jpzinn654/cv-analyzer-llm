@@ -1,6 +1,9 @@
-import re, uuid, os
+import sys, os, re, uuid
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import fitz
-from models.analysis import Analysis
+from src.models.analysis import Analysis
 
 def read_pdf(file_path):
     text = ""
@@ -19,7 +22,7 @@ def extract_data_analysis(resum_cv, job_id, resum_id, score) -> Analysis:
         "name": "",
         "skills": [],
         "education": [],
-        "languages": [],
+        "language": [],
         "score": score
     }
 
