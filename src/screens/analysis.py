@@ -1,8 +1,9 @@
-import os
+import os, time
 import streamlit as st
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 from services.database import AnalyseDatabase
+from utils.resume_analysis import ResumeAnalysis
 
 class JobAnalysisApp:
 
@@ -48,11 +49,18 @@ class JobAnalysisApp:
 
     def display_job_selector(self):
         """Exibe a seleção da vaga para o usuário."""
-        return st.selectbox(
+        select = st.selectbox(
             "Escolha sua vaga:",
             [job.get('name') for job in self.database.jobs.all()],
             index=None
         )
+        btn = st.button('Gerar Análise')
+
+        if btn:
+            with st.spinner("Carregando os currículos", show_time=True):
+                ResumeAnalysis(job_name=select).run()
+                time.sleep(100)
+        return select
 
     def display_candidate_chart(self):
         """Exibe o gráfico de barras com as pontuações dos candidatos."""
